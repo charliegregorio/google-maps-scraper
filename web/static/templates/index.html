@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Maps Scraper</title>
     <link rel="stylesheet" href="/static/css/main.css">
+    <!-- job_rows.html returns the <tbody> plus an OOB pagination <div>; without
+         template fragments htmx 1.x wraps it in <table>, the <div> is hoisted out
+         and swapped in place of #job-tbody. -->
+    <meta name="htmx-config" content='{"useTemplateFragments":true}'>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/1.9.6/htmx.min.js"></script>
 </head>
 <body>
