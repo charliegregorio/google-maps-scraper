@@ -1,0 +1,3 @@
+# Local-only CA certs (see Dockerfile). Never commit them.
+*
+!.gitignore

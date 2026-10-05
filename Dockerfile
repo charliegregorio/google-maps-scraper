@@ -8,8 +8,16 @@ ENV PLAYWRIGHT_BROWSERS_PATH=/opt/browsers
 ENV PLAYWRIGHT_DRIVER_PATH=/opt/ms-playwright-go
 ARG PLAYWRIGHT_GO_VERSION=v0.6100.0
 
+# Optional extra root CAs for networks that intercept TLS (corporate proxies):
+# drop PEM *.crt files in certs/ before building. Empty in git, so this is a
+# no-op by default. Node (used by `playwright install`) ignores the system
+# store unless pointed at it.
+COPY certs/ /usr/local/share/ca-certificates/extra/
+ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates \
+    && update-ca-certificates \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && go install github.com/mxschmitt/playwright-go/cmd/playwright@${PLAYWRIGHT_GO_VERSION} \
